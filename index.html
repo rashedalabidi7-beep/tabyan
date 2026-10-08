@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>تبيان — منصة توعية الشباب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@500;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1F1B; --bg-soft:#13281F; --panel:#162B23;
+    --ink:#EDEAE0; --ink-dim:#9BB0A6;
+    --line:rgba(237,234,224,.12);
+    --gold:#C98A3B; --loss:#D86A52; --gain:#79D16B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:"Tajawal",sans-serif;line-height:1.8}
+  .wrap{width:min(920px,90%);margin:auto}
+  h1,h2{font-family:"Markazi Text",serif;font-weight:700}
+
+  nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px}
+  .brand{font-family:"Markazi Text",serif;font-size:1.6rem;font-weight:700;color:var(--gold)}
+  nav a{color:var(--ink-dim);font-size:.95rem;padding:8px 14px;border-radius:999px;transition:.2s}
+  nav a:hover{color:var(--ink);background:var(--panel)}
+
+  .hero{padding:90px 0 70px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, color-mix(in srgb,var(--gold) 20%,transparent), transparent 70%);
+    filter:blur(10px);}
+  .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:center;position:relative}
+  .eyebrow{color:var(--gold);font-size:.9rem;font-weight:700;margin-bottom:16px}
+  h1{font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.3;margin-bottom:18px}
+  .hero p{color:var(--ink-dim);max-width:46ch;font-size:1.05rem}
+  .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;background:var(--gold);color:#19120A;
+    font-weight:800;padding:14px 28px;border-radius:999px;border:none;cursor:pointer;font-size:1rem;
+    font-family:inherit;transition:.2s}
+  .cta:hover{transform:translateY(-2px)}
+
+  .visual{position:relative;aspect-ratio:1/1;display:grid;place-items:center}
+  .ring{position:absolute;border-radius:50%;border:1px solid var(--line)}
+  .ring.r1{inset:0}
+  .ring.r2{inset:14%}
+  .ring.r3{inset:28%;border-color:var(--gold);opacity:.5}
+  .visual-core{position:relative;z-index:1;text-align:center}
+  .visual-core .num{font-family:"Markazi Text",serif;font-size:3.2rem;font-weight:700;color:var(--gold)}
+  .visual-core .lbl{color:var(--ink-dim);font-size:.85rem}
+
+  section{padding:60px 0}
+  .section-head{margin-bottom:34px}
+  .section-head .eyebrow{margin-bottom:8px}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.1rem)}
+  .section-head p{color:var(--ink-dim);margin-top:10px;max-width:60ch}
+
+  .calc-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:36px}
+  .calc-row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+  .field{flex:1;min-width:220px}
+  .field label{display:block;font-size:.9rem;color:var(--ink-dim);margin-bottom:8px}
+  .field input{width:100%;background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;
+    color:var(--ink);padding:14px 16px;font:inherit;font-size:1.05rem;outline:none}
+  .field input:focus{border-color:var(--gold)}
+  .calc-btn{background:var(--gold);color:#19120A;border:none;border-radius:12px;padding:14px 30px;
+    font-weight:800;font-family:inherit;font-size:1rem;cursor:pointer;white-space:nowrap}
+
+  .results{margin-top:30px;display:none}
+  .results.show{display:block}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+  .stat{background:var(--bg-soft);border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center}
+  .stat .v{font-family:"Markazi Text",serif;font-size:1.7rem;font-weight:700;color:var(--loss)}
+  .stat .l{color:var(--ink-dim);font-size:.82rem;margin-top:4px}
+
+  .alt-head{font-weight:700;margin-bottom:12px;color:var(--gain)}
+  .alts{display:grid;gap:10px}
+  .alt{display:flex;gap:12px;align-items:flex-start;background:var(--bg-soft);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px}
+  .alt .ic{font-size:1.3rem;line-height:1}
+  .alt .t{font-weight:700;font-size:.95rem}
+  .alt .d{color:var(--ink-dim);font-size:.85rem;margin-top:2px}
+
+  .q-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px;margin-bottom:16px}
+  .q-progress{color:var(--ink-dim);font-size:.82rem;margin-bottom:10px}
+  .q-text{font-size:1.1rem;font-weight:700;margin-bottom:18px}
+  .q-opts{display:grid;gap:10px}
+  .q-opt{text-align:right;background:var(--bg-soft);border:1px solid var(--line);color:var(--ink);
+    border-radius:12px;padding:14px 16px;font:inherit;font-size:.95rem;cursor:pointer;transition:.15s}
+  .q-opt:hover{border-color:var(--gold)}
+  .q-opt.selected{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,var(--bg-soft))}
+
+  .quiz-result{display:none;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:36px;text-align:center}
+  .quiz-result.show{display:block}
+  .quiz-result .score{font-family:"Markazi Text",serif;font-size:2.6rem;font-weight:700;color:var(--gold)}
+  .quiz-result .msg{color:var(--ink-dim);max-width:52ch;margin:14px auto 0}
+  .retry{margin-top:20px;background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:10px 24px;font:inherit;cursor:pointer}
+
+  footer{padding:40px 0;text-align:center;color:var(--ink-dim);font-size:.85rem;border-top:1px solid var(--line)}
+
+  @media(max-width:760px){
+    .hero-grid{grid-template-columns:1fr}
+    .visual{max-width:220px;margin:auto}
+    .stats{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">تبيان</div>
+    <div>
+      <a href="#calc">حاسبة الأضرار</a>
+      <a href="#quiz">اختبار الوعي</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">منصة توعية شبابية</div>
+      <h1>كل يوم تأجّله، رقم يكبر — وأنت من يقرر إلى أين يذهب</h1>
+      <p>قبل ما تبدأ، اعرف الحجم الحقيقي للمبلغ اللي يصرف يومياً — وشوف وش تقدر تبنيه بدل ما يضيع.</p>
+      <button class="cta" onclick="document.getElementById('calc').scrollIntoView()">احسب رقمك الآن ←</button>
+    </div>
+    <div class="visual">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+      <div class="visual-core">
+        <div class="num">؟</div>
+        <div class="lbl">رقمك لسه ما ظهر</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">الخطوة الأولى</div>
+      <h2>حاسبة أضرار الوقت والمال</h2>
+      <p>أدخل المبلغ اللي يُصرف باليوم الواحد (على القات أو أي تعاطٍ آخر)، وشوف حجمه الحقيقي على المدى الطويل.</p>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-row">
+        <div class="field">
+          <label for="daily">المبلغ اليومي (ريال يمني)</label>
+          <input type="number" id="daily" placeholder="مثال: 3000" min="0" inputmode="numeric">
+        </div>
+        <button class="calc-btn" onclick="calcImpact()">احسب</button>
+      </div>
+
+      <div class="results" id="results">
+        <div class="stats">
+          <div class="stat"><div class="v" id="vMonth">—</div><div class="l">خلال شهر</div></div>
+          <div class="stat"><div class="v" id="vYear">—</div><div class="l">خلال سنة</div></div>
+          <div class="stat"><div class="v" id="vFive">—</div><div class="l">خلال 5 سنوات</div></div>
+        </div>
+
+        <div class="alt-head">بهذا المبلغ (سنوياً) تقدر بدلاً من ذلك:</div>
+        <div class="alts" id="alts"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">الخطوة الثانية</div>
+      <h2>اختبار الوعي</h2>
+      <p>5 أسئلة سريعة تقيس مدى معرفتك بالأضرار الصحية والنفسية والاقتصادية — بدون أحكام، بس وضوح.</p>
+    </div>
+
+    <div id="quizQuestions"></div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="score" id="qScore">—</div>
+      <div class="msg" id="qMsg"></div>
+      <button class="retry" onclick="resetQuiz()">إعادة الاختبار</button>
+    </div>
+  </div>
+</section>
+
+<footer>تبيان — منصة توعية شبابية · الأقسام القادمة: دليل تبيان، التسجيل بالمسابقة</footer>
+
+<script>
+function fmt(n){ return Math.round(n).toLocaleString('en-US') + ' ر.ي'; }
+
+function calcImpact(){
+  const daily = parseFloat(document.getElementById('daily').value);
+  if(!daily || daily <= 0){ return; }
+  const month = daily * 30;
+  const year = daily * 365;
+  const five = year * 5;
+
+  document.getElementById('vMonth').textContent = fmt(month);
+  document.getElementById('vYear').textContent = fmt(year);
+  document.getElementById('vFive').textContent = fmt(five);
+
+  const options = [
+    {ic:'💻', t:'جهاز لابتوب للعمل الحر أو الدراسة', d:'استثمار في أداة تفتح لك دخل أو فرص تعلم جديدة'},
+    {ic:'📚', t:'اشتراك سنوي بعدة دورات تدريبية احترافية', d:'بناء مهارة حقيقية تقدر تتكسب منها لاحقاً'},
+    {ic:'🐐', t:'رأس مال لمشروع صغير (تجارة أو تربية)', d:'بداية دخل إضافي يستمر بعد السنة الأولى'},
+  ];
+
+  const altsEl = document.getElementById('alts');
+  altsEl.innerHTML = '';
+  options.forEach(o=>{
+    const row = document.createElement('div');
+    row.className = 'alt';
+    row.innerHTML = `<div class="ic">${o.ic}</div><div><div class="t">${o.t}</div><div class="d">${o.d}</div></div>`;
+    altsEl.appendChild(row);
+  });
+
+  document.getElementById('results').classList.add('show');
+  document.querySelector('.visual-core .num').textContent = fmt(year).split(' ')[0];
+  document.querySelector('.visual-core .lbl').textContent = 'خسارة متوقعة خلال سنة';
+}
+
+const quizData = [
+  { q:'وش أكثر ضرر صحي مباشر يسببه تعاطي القات على المدى الطويل؟',
+    opts:['يحسّن النوم','مشاكل بالجهاز الهضمي والقلب والأسنان','ما له أي أضرار جسدية'], correct:1 },
+  { q:'كيف يؤثر القات على الأداء الدراسي أو الوظيفي؟',
+    opts:['يرفع التركيز بعد الجلسة','يسبب خمول وتراجع تركيز بالساعات التالية','لا يوجد تأثير'], correct:1 },
+  { q:'متوسط الوقت اليومي اللي تستهلكه جلسة قات عادة؟',
+    opts:['أقل من نصف ساعة','3 إلى 6 ساعات تقريباً','دقائق معدودة'], correct:1 },
+  { q:'وش العلاقة الأكثر شيوعاً بين تعاطي القات والحالة النفسية؟',
+    opts:['يرفع الطاقة فقط','قلق وأرق واضطراب مزاج عند الانقطاع عنه','لا توجد أي علاقة'], correct:1 },
+  { q:'إيش أفضل وصف لأثر القات على ميزانية الشخص على المدى الطويل؟',
+    opts:['مبلغ بسيط لا يُذكر','يتراكم بمرور الوقت ليشكّل مبلغاً كبيراً فائتاً','يعود دائماً كربح'], correct:1 },
+];
+
+let quizAnswers = new Array(quizData.length).fill(null);
+
+function renderQuiz(){
+  const el = document.getElementById('quizQuestions');
+  el.innerHTML = quizData.map((item, qi) => `
+    <div class="q-card">
+      <div class="q-progress">سؤال ${qi+1} من ${quizData.length}</div>
+      <div class="q-text">${item.q}</div>
+      <div class="q-opts">
+        ${item.opts.map((o, oi) => `<button class="q-opt" data-q="${qi}" data-o="${oi}" onclick="selectOpt(${qi},${oi})">${o}</button>`).join('')}
+      </div>
+    </div>
+  `).join('') + `<button class="cta" onclick="submitQuiz()">عرض النتيجة ←</button>`;
+}
+
+function selectOpt(qi, oi){
+  quizAnswers[qi] = oi;
+  document.querySelectorAll(`.q-opt[data-q="${qi}"]`).forEach(b=>{
+    b.classList.toggle('selected', parseInt(b.dataset.o) === oi);
+  });
+}
+
+function submitQuiz(){
+  if(quizAnswers.includes(null)){
+    alert('جاوب على كل الأسئلة قبل عرض النتيجة');
+    return;
+  }
+  let score = 0;
+  quizAnswers.forEach((a, i) => { if(a === quizData[i].correct) score++; });
+
+  document.getElementById('quizQuestions').style.display = 'none';
+  const resultEl = document.getElementById('quizResult');
+  resultEl.classList.add('show');
+  document.getElementById('qScore').textContent = score + ' / ' + quizData.length;
+
+  let msg;
+  if(score === quizData.length){
+    msg = 'وعي كامل بالموضوع. المعرفة اللي عندك تخليك قدوة لأصحابك — شاركهم إياها.';
+  } else if(score >= 3){
+    msg = 'وعي جيد، وفيه نقاط تستاهل توضيح أكثر. راجع دليل تبيان بالأسفل قريباً لتكمّل الصورة.';
+  } else {
+    msg = 'هذا بالضبط سبب وجود تبيان — الصورة أوضح مما تتخيل، وأول خطوة هي إنك عرفت الحقيقة.';
+  }
+  document.getElementById('qMsg').textContent = msg;
+}
+
+function resetQuiz(){
+  quizAnswers = new Array(quizData.length).fill(null);
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizQuestions').style.display = 'block';
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+
+</body>
+  </html>
+  
